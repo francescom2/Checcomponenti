@@ -1,0 +1,109 @@
+/* ==========================================================================
+   LAYOUT STORICO ORDINI & FATTURA
+   ========================================================================== */
+
+.ordini-main {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.ordine-box {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    background-color: #fcfcfc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.ordine-header {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.ordine-header h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+/* Tabella Prodotti */
+.table-ordini {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+.table-ordini th, 
+.table-ordini td {
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    text-align: left;
+}
+
+.table-ordini th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #444;
+}
+
+/* Riepilogo e Pulsante */
+.totale-section {
+    text-align: right;
+    margin-top: 15px;
+}
+
+.totale-testo {
+    font-size: 1.2em;
+    margin-bottom: 12px;
+}
+
+.btn-stampa {
+    background-color: #0066cc;
+    color: #ffffff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.btn-stampa:hover {
+    background-color: #004999;
+}
+
+.no-ordini-msg {
+    font-size: 1.1em;
+    color: #666;
+}
+
+
+/* Per fattura */
+@media print {
+    /* Nascondi Header, Footer, Nav e Pulsanti */
+    header, footer, nav, .no-print, h2 {
+        display: none !important;
+    }
+
+    /* 1. NASCONDI TUTTI GLI ORDINI DI DEFAULT */
+    .ordine-box {
+        display: none !important;
+    }
+
+    /* 2. MOSTRA ESCLUSIVAMENTE L'ORDINE SELEZIONATO */
+    .ordine-box.in-stampa {
+        display: block !important;
+        border: 1px solid #000;
+        padding: 20px;
+        margin: 0;
+        background: #fff;
+        page-break-after: avoid; /* Evita pagine bianche extra */
+    }
+
+    body {
+        background: #fff;
+        color: #000;
+    }
+}
