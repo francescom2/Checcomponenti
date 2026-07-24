@@ -137,14 +137,14 @@ public class ProdottoDAO {
     }
     
     // 6. Cambia visibilità
-    public synchronized boolean setVisibilita(long id, int visibile) throws SQLException {
+    public synchronized boolean setVisibilita(long id, boolean visibile) throws SQLException {
         String sql = "UPDATE " + TABLE_NAME + " SET visibile = ? WHERE ID = ?";
         int result = 0;
 
         try (Connection con = ConnessioneDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, visibile);
+            ps.setBoolean(1, visibile);
             ps.setLong(2, id);
             result = ps.executeUpdate();
         }
