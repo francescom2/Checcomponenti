@@ -1,3 +1,13 @@
+CREATE DATABASE ecommerce;
+
+DROP DATABASE ecommerce;
+
+USE ecommerce;
+
+SELECT * FROM Utente;
+
+DELETE FROM Utente
+WHERE id = 6;
 
 CREATE TABLE Utente (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

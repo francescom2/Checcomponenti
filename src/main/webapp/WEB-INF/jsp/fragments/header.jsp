@@ -10,15 +10,36 @@
 </head>
 <body>
 
+<%@ page import ="model.UtenteBean" %>
+<% UtenteBean utente = (UtenteBean) session.getAttribute("utente"); %>
+
 <header>
     <div class="logo">
         Checomponenti
     </div>
     <nav>
+    
         <a href="${pageContext.request.contextPath}/catalogo">Catalogo</a>
         <a href="${pageContext.request.contextPath}/carrello">Carrello</a>
-        <a href="${pageContext.request.contextPath}/login">Accedi</a>
-        <a href="${pageContext.request.contextPath}/StoricoOrdini">Storico ordini</a>
+        
+        <% if (utente != null) { %>
+        	
+        	${utente.getUsername()}
+        
+			<a href="${pageContext.request.contextPath}/StoricoOrdini">Storico Ordini</a>
+			<a href="${pageContext.request.contextPath}/logout">Logout</a>
+			                	
+        <% } else { %>
+       		 <a href="${pageContext.request.contextPath}/login" class="btn-header btn-login"> Accedi </a>
+             
+             <a href="${pageContext.request.contextPath}/registrazione" class="btn-header btn-register"> Registrati </a>
+             
+        <%} %>
+        
+        <% if (utente!= null && utente.isAdmin() == true) {%>
+	        <a href="${pageContext.request.contextPath}/GestioneProdottiAdmin" class="btn-header btn-admin"> Area Admin </a>
+	<% } %>
+     
         
     </nav>
 </header>
