@@ -42,9 +42,10 @@
                     <thead>
                         <tr>
                             <th>Prodotto</th>
-                            <th>Prezzo Unitario</th>
+                            <th>Prezzo Imponibile</th>
+							<th>IVA</th>
+                   			<th>Prezzo Unitario</th>
                             <th>Quantità</th>
-                            <th>IVA</th>
                             <th>Subtotale (Inc. IVA)</th>
                         </tr>
                     </thead>
@@ -52,10 +53,11 @@
                         <% for (OrderItemBean item : ordine.getItems()) { %>
                             <tr>
                                 <td><%= item.getNome() %></td>
+                                <td>€ <%= String.format("%.2f", item.getPrezzoSenzaIva()) %></td>
+                                <td><%= item.getIva() %>%</td>
                                 <td>€ <%= String.format("%.2f", item.getPrezzo()) %></td>
                                 <td><%= item.getQuantita() %></td>
-                                <td><%= item.getIva() %>%</td>
-                                <td>€ <%= String.format("%.2f", item.getSubtotaleConIva()) %></td>
+                                <td>€ <%= String.format("%.2f", item.getPrezzo() * item.getQuantita() ) %></td>
                             </tr>
                         <% } %>
                     </tbody>

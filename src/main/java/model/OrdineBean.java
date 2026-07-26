@@ -41,7 +41,7 @@ public class OrdineBean {
     public double getTotaleOrdine() {
         double totale = 0;
         for (OrderItemBean item : items) {
-            totale += item.getSubtotaleConIva();
+            totale += item.getPrezzo() *item.getQuantita();
         }
         return totale;
     }

@@ -42,7 +42,7 @@ public class Carrello implements Serializable {
     // Aggiunge un prodotto o ne incrementa la quantità se esiste già
     public void addProdotto(ProdottoBean prodotto) {
         for (ItemCarrello item : items) {
-            if (item.getProdotto().getId() == prodotto.getId()) { // Se usi getCodice(), cambia qui
+            if (item.getProdotto().getId() == prodotto.getId()) { 
                 item.setQuantita(item.getQuantita() + 1);
                 return;
             }

@@ -33,7 +33,7 @@ public class StoricoOrdiniController extends HttpServlet {
         }
 
         try {
-            // Nessun DataSource da passare!
+
             OrdineDAO ordineDAO = new OrdineDAO(); 
             List<OrdineBean> ordini = ordineDAO.doRetrieveByUtente(utente.getId());
             

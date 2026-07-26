@@ -26,15 +26,15 @@ public class UtenteDAO {
     }
 
     // Login utente
-    public synchronized UtenteBean doRetrieveByEmailAndPassword(String email, String passwordInChiaro) throws SQLException {
+    public synchronized UtenteBean doRetrieveByEmailAndPassword(String username, String passwordInChiaro) throws SQLException {
         UtenteBean utente = null;
-        String selectSQL = "SELECT * FROM Utente WHERE email = ? AND password = ?";
+        String selectSQL = "SELECT * FROM Utente WHERE username = ? AND password = ?";
         String passwordHash = GestorePassword.hashPassword(passwordInChiaro);
 
         try (Connection connection = ConnessioneDB.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
-            preparedStatement.setString(1, email);
+            preparedStatement.setString(1, username);
             preparedStatement.setString(2, passwordHash);
 
             try (ResultSet rs = preparedStatement.executeQuery()) {

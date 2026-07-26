@@ -21,7 +21,7 @@
     <%@ include file="fragments/header.jsp" %>
 
     <div class="main-content">
-        <h1>🛒 Il tuo Carrello</h1>
+        <h1> Il tuo Carrello</h1>
 
         <% if (carrello.isEmpty()) { %>
             <div class="empty-cart-container">
@@ -34,6 +34,8 @@
                     <thead>
                         <tr>
                             <th>Prodotto</th>
+                            <th>Prezzo Imponibile</th>
+                            <th>IVA</th>
                             <th>Prezzo Unitario</th>
                             <th>Quantità</th>
                             <th>Totale</th>
@@ -46,7 +48,9 @@
                                 <td>
                                     <strong><%= item.getProdotto().getNome() %></strong>
                                 </td>
-                                <td>€ <%= String.format("%.2f", item.getProdotto().getPrezzo()) %></td>
+                                <td>€ <%= String.format("%.2f", item.getProdotto().getPrezzoSenzaIva()) %></td>
+                                <td> <%= item.getProdotto().getIva() %> % </td>
+                                <td>€ <%= String.format("%.2f", item.getProdotto().getPrezzo()) %></td>                                
                                 <td>
                                     <form action="${pageContext.request.contextPath}/carrello" method="POST" class="qty-form">
                                         <input type="hidden" name="action" value="update">

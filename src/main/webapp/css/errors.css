@@ -1,0 +1,44 @@
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-weight: 100;
+    background-color: #357ade;
+    margin: 0;
+    padding: 0;
+    
+}
+
+.error-container {
+    text-align: left;
+    padding: 60px 20px;
+    padding-left: 300px;
+}
+
+.error-code {
+    font-size: 172px;
+    margin-bottom: 10px;
+}
+
+.error-404, 
+.error-500 {
+    color: #fff;
+    font-weight: 100;
+}s
+
+.error-403 {
+    color: #ffc107;
+}
+
+.error-message {
+    margin: 20px 0;
+    color: #fff;
+}
+
+.btn-error-return {
+    text-decoration: none;
+    padding: 10px 20px;
+    display: inline-block;
+}
+
+h2{
+	color: #fff;
+}

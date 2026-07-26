@@ -33,9 +33,9 @@ public class OrderItemBean {
     public String getIva() { return iva; }
     public void setIva(String iva) { this.iva = iva; }
 
-    // Calcolo subtotale singola riga d'ordine (comprensivo di IVA)
-    public double getSubtotaleConIva() {
-        double aliquota = Double.parseDouble(iva);
-        return (prezzo * quantita) * (1 + aliquota / 100.0);
+    
+    public double getPrezzoSenzaIva() {
+    	double aliquota = Double.parseDouble(iva); 
+        return (prezzo) / (1 + (aliquota / 100.0));    
     }
 }

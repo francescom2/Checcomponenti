@@ -56,4 +56,10 @@ public class ProdottoBean implements Serializable {
     
     public boolean getVisibile() { return visibile;}
     public void setVisibile (boolean visibile) {this.visibile = visibile;}
+    
+    public double getPrezzoSenzaIva() {
+    	double aliquota = Double.parseDouble(iva); 
+        return (prezzo) / (1 + (aliquota / 100.0));    
+    }
+    
 }

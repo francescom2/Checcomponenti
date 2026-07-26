@@ -15,10 +15,12 @@ public class OrdineDAO {
     public synchronized long doSaveOrder(long idUtente, long idInfoConsegna, List<Carrello.ItemCarrello> items) throws SQLException {
         String insertOrdineSQL = "INSERT INTO Ordine (idUtente, infoConsegna) VALUES (?, ?)";
         String insertItemSQL = "INSERT INTO OrderItem (nome, idProdotto, idOrdine, prezzo, quantita, IVA) VALUES (?, ?, ?, ?, ?, ?)";
+        String updateStockSQL = "UPDATE Prodotto SET quantita = quantita - ? WHERE id = ?";
 
         Connection connection = null;
         PreparedStatement psOrdine = null;
         PreparedStatement psItem = null;
+        PreparedStatement psStock = null;
         long idOrdine = -1;
 
         try {
@@ -41,8 +43,10 @@ public class OrdineDAO {
                 throw new SQLException("Impossibile recuperare l'ID Ordine generato.");
             }
 
-            // 2. Inserimento di ogni singolo OrderItem (con Dati Storici)
+            // 2. Inserimento di ogni singolo OrderItem 
             psItem = connection.prepareStatement(insertItemSQL);
+            psStock = connection.prepareStatement(updateStockSQL);
+            
             for (Carrello.ItemCarrello item : items) {
                 ProdottoBean p = item.getProdotto();
                 psItem.setString(1, p.getNome());
@@ -53,9 +57,15 @@ public class OrdineDAO {
                 psItem.setString(6, p.getIva()); // ENUM ('4', '10', '22')
 
                 psItem.addBatch(); // Batch per massima efficienza
+                
+                // Scala quantità
+                psStock.setInt(1, item.getQuantita());
+                psStock.setLong(2, p.getId());
+                psStock.addBatch();
             }
 
             psItem.executeBatch();
+            psStock.executeBatch();
 
             connection.commit(); // CONFERMA TRANSAZIONE
         } catch (SQLException e) {
@@ -66,6 +76,7 @@ public class OrdineDAO {
         } finally {
             if (psOrdine != null) psOrdine.close();
             if (psItem != null) psItem.close();
+            if (psStock != null) psStock.close();
             if (connection != null) {
                 connection.setAutoCommit(true);
                 ConnessioneDB.releaseConnection(connection);
@@ -124,8 +135,85 @@ public class OrdineDAO {
     }
     
     
-    /// ?????????????????????????????????
-    private List<OrderItemBean> doRetrieveItemsByOrdine(long idOrdine, Connection connection) throws SQLException {
+    // Recupera tutti gli ordini 
+    public synchronized List<OrdineBean> doRetrieveAll() throws SQLException {
+        List<OrdineBean> ordini = new ArrayList<>();
+        String sql = "SELECT o.id, o.idUtente, o.infoConsegna, o.dataOrdine, " +
+                "i.via, i.citta, i.cap, i.destinatario " +
+                "FROM Ordine o " +
+                "LEFT JOIN InfoConsegna i ON o.infoConsegna = i.id " +
+                "ORDER BY o.dataOrdine DESC";
+
+        try (Connection con = ConnessioneDB.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                OrdineBean ordine = new OrdineBean();
+                ordine.setId(rs.getLong("id"));
+                ordine.setIdUtente(rs.getLong("idUtente"));
+                ordine.setInfoConsegna(rs.getLong("infoConsegna"));
+                ordine.setDataOrdine(rs.getTimestamp("dataOrdine"));
+                ordine.setItems(doRetrieveItemsByOrdine(ordine.getId(), con));
+                
+                if (rs.getString("destinatario") != null) {
+                    String indirizzo = rs.getString("destinatario") + " - " + 
+                                       rs.getString("via") + ", " + 
+                                       rs.getString("citta") + " (" + rs.getInt("cap") + ")";
+                    ordine.setIndirizzoConsegnaFormatted(indirizzo);
+                }
+                ordini.add(ordine);
+            }
+        }
+        return ordini;
+    }
+
+    // Filtra gli ordini per intervallo di date e/o id utente
+    public synchronized List<OrdineBean> doRetrieveByFilter(String dataInizio, String dataFine, String idUtenteStr) throws SQLException {
+        List<OrdineBean> ordini = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT o.id, o.idUtente, o.infoConsegna, o.dataOrdine, ")
+                .append("i.via, i.citta, i.cap, i.destinatario ")
+                .append("FROM Ordine o ")
+                .append("LEFT JOIN InfoConsegna i ON o.infoConsegna = i.id ")
+                .append("WHERE 1=1 ");
+        
+        
+        if (dataInizio != null && !dataInizio.isEmpty()) {
+            sql.append(" AND DATE(o.dataOrdine) >= '").append(dataInizio).append("'");
+        }
+        if (dataFine != null && !dataFine.isEmpty()) {
+            sql.append(" AND DATE(o.dataOrdine) <= '").append(dataFine).append("'");
+        }
+        if (idUtenteStr != null && !idUtenteStr.isEmpty()) {
+            sql.append(" AND o.idUtente = ").append(Long.parseLong(idUtenteStr));
+        }
+
+        sql.append(" ORDER BY dataOrdine DESC");
+
+        try (Connection con = ConnessioneDB.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql.toString());
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                OrdineBean ordine = new OrdineBean();
+                ordine.setId(rs.getLong("id"));
+                ordine.setIdUtente(rs.getLong("idUtente"));
+                ordine.setInfoConsegna(rs.getLong("infoConsegna"));
+                ordine.setDataOrdine(rs.getTimestamp("dataOrdine"));
+                ordine.setItems(doRetrieveItemsByOrdine(ordine.getId(), con));
+                
+                if (rs.getString("destinatario") != null) {
+                    String indirizzo = rs.getString("destinatario") + " - " + 
+                                       rs.getString("via") + ", " + 
+                                       rs.getString("citta") + " (" + rs.getInt("cap") + ")";
+                    ordine.setIndirizzoConsegnaFormatted(indirizzo);
+                }
+
+                ordini.add(ordine);
+            }
+        }
+        return ordini;
+    }    private List<OrderItemBean> doRetrieveItemsByOrdine(long idOrdine, Connection connection) throws SQLException {
         List<OrderItemBean> items = new ArrayList<>();
         String selectItems = "SELECT * FROM OrderItem WHERE idOrdine = ?";
 

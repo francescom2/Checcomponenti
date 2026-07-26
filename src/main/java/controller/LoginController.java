@@ -36,10 +36,10 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         
         request.setCharacterEncoding("UTF-8");
-        String email = request.getParameter("email");
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+        if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()) {
             request.setAttribute("error", "Inserisci sia l'email che la password.");
             request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
             return;
@@ -47,7 +47,7 @@ public class LoginController extends HttpServlet {
 
         try {
             // Verifica le credenziali tramite UtenteDAO (con hashing SHA-512)
-            UtenteBean utente = utenteDAO.doRetrieveByEmailAndPassword(email.trim(), password);
+            UtenteBean utente = utenteDAO.doRetrieveByEmailAndPassword(username.trim(), password);
 
             if (utente != null) {
                 // Credenziali corrette: salvo l'utente in sessione
@@ -56,7 +56,7 @@ public class LoginController extends HttpServlet {
 
                 // Se l'utente è admin, reindirizza all'area riservata admin, altrimenti al catalogo
                 if (utente.isAdmin()) {
-                    response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+                    response.sendRedirect(request.getContextPath() + "/GestioneProdottiAdmin");
                 } else {
                     response.sendRedirect(request.getContextPath() + "/catalogo");
                 }

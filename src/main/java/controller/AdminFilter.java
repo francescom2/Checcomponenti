@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import model.UtenteBean; 
 
 // Protegge tutto dentro la cartella admin
-@WebFilter(urlPatterns = {"/GestioneProdottiAdmin", "/admin/*"})
+@WebFilter(urlPatterns = {"/GestioneProdottiAdmin", "/GestioneOrdiniAdmin", "/admin/*"})
 public class AdminFilter implements Filter {
 
     @Override

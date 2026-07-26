@@ -37,7 +37,9 @@
         <%} %>
         
         <% if (utente!= null && utente.isAdmin() == true) {%>
-	        <a href="${pageContext.request.contextPath}/GestioneProdottiAdmin" class="btn-header btn-admin"> Area Admin </a>
+	        <a href="${pageContext.request.contextPath}/GestioneProdottiAdmin" class="btn-header btn-admin"> CRUD </a>
+	        <a href="${pageContext.request.contextPath}/GestioneOrdiniAdmin" class="btn-header btn-admin"> Gestione Ordini Admin </a>
+
 	<% } %>
      
         
