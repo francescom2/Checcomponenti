@@ -23,7 +23,7 @@
                 
                 <div class="form-group">
                     <label for="username">Username:</label>
-                    <input type="username" id="username" name="username" required autocomplete="username">
+                    <input type="username" id="username" name="username" required autocomplete="text">
                 </div>
 
                 <div class="form-group">
