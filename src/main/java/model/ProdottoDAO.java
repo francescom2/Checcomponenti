@@ -63,6 +63,35 @@ public class ProdottoDAO {
         }
         return prodotti;
     }
+    
+    // 2. Recupera tutti i prodotti visibili
+    public synchronized List<ProdottoBean> doRetrieveAllVisible() throws SQLException {
+        List<ProdottoBean> prodotti = new LinkedList<>();
+        String selectSQL = "SELECT * FROM " + TABLE_NAME +
+        				   " WHERE visibile = 1";
+
+        try (Connection con = ConnessioneDB.getConnection();
+             PreparedStatement ps = con.prepareStatement(selectSQL);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                ProdottoBean bean = new ProdottoBean();
+                bean.setId(rs.getLong("ID"));
+                bean.setNome(rs.getString("NOME"));
+                bean.setDescrizione(rs.getString("DESCRIZIONE"));
+                bean.setPrezzo(rs.getDouble("PREZZO"));
+                bean.setQuantita(rs.getInt("QUANTITA"));
+                bean.setIva(rs.getString("IVA"));
+                bean.setImgPath(rs.getString("imgPath"));
+                bean.setIdCategoria(rs.getLong("idCategoria"));
+                bean.setVisibile(rs.getBoolean("visibile"));
+
+                prodotti.add(bean);
+            }
+        }
+        return prodotti;
+    }
+
 
     // SPECIFICI PER L'ADMIN
 

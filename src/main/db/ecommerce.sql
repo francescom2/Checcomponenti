@@ -7,7 +7,14 @@ USE ecommerce;
 SELECT * FROM Utente;
 
 DELETE FROM Utente
-WHERE id = 6;
+WHERE id = 2;
+
+UPDATE Utente
+SET isAdmin = 1
+WHERE id = 21;
+
+SELECT * FROM Prodotto WHERE visibile = 1;
+
 
 CREATE TABLE Utente (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

@@ -29,7 +29,7 @@ public class CatalogoController extends HttpServlet {
 
         try {
             // 1. Prelevare la lista dei prodotti dal DB
-            Collection<ProdottoBean> prodotti = dao.doRetrieveAll();
+            Collection<ProdottoBean> prodotti = dao.doRetrieveAllVisible();
 
             // 2. Spostare la lista dentro la request con il nome prodotti
             request.setAttribute("prodotti", prodotti);
