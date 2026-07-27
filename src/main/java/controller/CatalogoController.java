@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.CategoriaBean;
+import model.CategoriaDAO;
 import model.ProdottoBean;
 import model.ProdottoDAO;
 
@@ -26,13 +29,16 @@ public class CatalogoController extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
 
         ProdottoDAO dao = new ProdottoDAO();
-
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        
         try {
             // 1. Prelevare la lista dei prodotti dal DB
             Collection<ProdottoBean> prodotti = dao.doRetrieveAll(true);
-
+            List<CategoriaBean> categorie = categoriaDAO.doRetrieveAll();
+            
             // 2. Spostare la lista dentro la request con il nome prodotti
             request.setAttribute("prodotti", prodotti);
+            request.setAttribute("categorie", categorie);
 
         } catch (SQLException e) {
             System.err.println("Errore nel recupero prodotti: " + e.getMessage());
