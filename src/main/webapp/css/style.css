@@ -83,6 +83,20 @@ h1 {
     font-weight: bold;
 }
 
+.btn-sold-out, 
+.btn:disabled {
+    background-color: #95a5a6 !important; 
+    color: #ffffff;
+    cursor: not-allowed;  /* Mostra il cursore di blocco */
+    opacity: 0.7;
+    box-shadow: none;
+    transform: none !important; /* Disattiva l'effetto al passaggio del mouse */
+}
+
+.text-out-of-stock {
+    color: #e74c3c;                      
+    font-weight: bold;
+}
 .btn:hover {
     background-color: #2980b9;
 }

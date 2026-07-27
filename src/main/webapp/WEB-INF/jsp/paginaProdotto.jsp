@@ -38,12 +38,21 @@
                 <h1><%= p.getNome() %></h1>
                 <p class="product-descriptor"><%= p.getDescrizione() %></p>
                 
-                <div class="price price-large">€ <%= String.format("%.2f", p.getPrezzo()) %></div>
-                <p><strong>Disponibilità immediata:</strong> <%= p.getQuantita() %> pezzi</p>
-
+                <% if (p.getQuantita() == 0) {%>
+					<div class="price">€ <%= String.format("%.2f", p.getPrezzo()) %></div>
+					<p class="text-out-of-stock"><small>Prodotto terminato!</small></p>
+	                <button type="button" class="btn btn-sold-out" >									
+						SOLD OUT
+					</button>
+				<%} else { %>
+	                <div class="price price-large">€ <%= String.format("%.2f", p.getPrezzo()) %></div>
+	                <p><strong>Disponibilità immediata:</strong> <%= p.getQuantita() %> pezzi</p>
+	
 					<button type="button" class="btn" onclick="aggiungiAlCarrello(this, <%= p.getId() %>, '${pageContext.request.contextPath}')">
 					    Aggiungi al Carrello
 					</button>
+				<%} %>
+					
             </div>
         </div>
     </div>

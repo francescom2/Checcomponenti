@@ -49,7 +49,7 @@
     <%@ include file="fragments/header.jsp" %>
 
     <div class="main-content">
-        <h1> Catalogo Componenti PC</h1>
+        <h1> Desideri un Upgrade?<br>Oppure un intero PC nuovo di zecca?</h1>
 
         <div class="container">
             <% 
@@ -108,9 +108,17 @@
 					                                	
 					                                </a>
 													     
-					                                <p><%= p.getDescrizione() %></p>
 					                            </div>
 													<div>
+													<% if (p.getQuantita() == 0) {%>
+													    <div class="price">€ <%= String.format("%.2f", p.getPrezzo()) %></div>
+													    <p class="text-out-of-stock"><small>Prodotto terminato!</small></p>
+													    
+													    <!-- uso di AJAX  -->
+														<button type="button" class="btn btn-sold-out" >
+														    SOLD OUT
+														</button>
+													<%} else { %>
 													    <div class="price">€ <%= String.format("%.2f", p.getPrezzo()) %></div>
 													    <p><small>Disponibilità: <%= p.getQuantita() %> pz</small></p>
 													
@@ -118,6 +126,7 @@
 														<button type="button" class="btn" onclick="aggiungiAlCarrello(this, <%= p.getId() %>, '${pageContext.request.contextPath}')">
 														    Aggiungi al Carrello
 														</button>
+													<%} %>
 												</div>
 				                        </div>
                         
