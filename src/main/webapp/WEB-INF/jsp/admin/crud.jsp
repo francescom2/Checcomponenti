@@ -118,6 +118,7 @@
                             <th>ID</th>
                             <th>Anteprima</th>
                             <th>Nome</th>
+                            <th>Categoria</th>
                             <th>Prezzo</th>
                             <th>IVA</th>
                             <th>Stock</th>
@@ -144,7 +145,21 @@
                                     <img src="img/<%= p.getImgPath() %>" alt="<%= p.getNome() %>" class="table-img">
                                 </td>
                                 <td><strong><%= p.getNome() %></strong></td>
-                                <td>€ <%= String.format("%.2f", p.getPrezzo()) %></td>
+								<td>
+								    <% 
+								        String nomeCategorie = "";
+								        if (categorie != null) {
+								            for (CategoriaBean cat : categorie) {
+								                if (cat.getId() == p.getIdCategoria()) {
+								                    nomeCategorie = cat.getNome();
+								                    break;
+								                }
+								            }
+								        }
+								    %>
+								    <%= nomeCategorie %>
+								</td>                                
+								<td>€ <%= String.format("%.2f", p.getPrezzo()) %></td>
                                 <td><span class="badge-iva"><%= p.getIva() %>%</span></td>
                                 <td><%= p.getQuantita() %> pz</td>
                                 <td>

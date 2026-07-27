@@ -29,7 +29,6 @@ public class ProdottoDAO {
     }
     
     
-    
     // Recupera un singolo prodotto tramite ID 
     public synchronized ProdottoBean doRetrieveByKey(long id) throws SQLException {
         ProdottoBean bean = new ProdottoBean();

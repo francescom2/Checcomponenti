@@ -15,6 +15,23 @@ WHERE id = 21;
 
 SELECT * FROM Prodotto WHERE visibile = 1;
 
+INSERT INTO Categoria (nome)
+VALUES
+("Processore"),
+("RAM"),
+("Scheda Video"),
+("Scheda Madre"),
+("Storage"),
+("Dissipatore"),
+("Case"),
+("Alimentatore");
+
+UPDATE Categoria SET nome = "Alimentatore" WHERE id = 7;
+
+SELECT * FROM Categoria;
+
+DELETE FROM Categoria 
+WHERE nome = "Alimentatori";
 
 CREATE TABLE Utente (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
