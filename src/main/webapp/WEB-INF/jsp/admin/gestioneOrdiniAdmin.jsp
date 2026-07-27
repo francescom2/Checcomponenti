@@ -19,7 +19,7 @@
         <h2> Pannello Admin - Gestione Ordini Clienti</h2>
 
         <!-- Form dei Filtri -->
-        <section class="filter-section">
+        <section class="form-section">
             <h3> Filtra Ordini</h3>
             <form action="${pageContext.request.contextPath}/GestioneOrdiniAdmin" method="GET" class="filter-form">
                 <div class="form-group">

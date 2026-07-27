@@ -13,35 +13,48 @@
 <%@ page import ="model.UtenteBean" %>
 <% UtenteBean utente = (UtenteBean) session.getAttribute("utente"); %>
 
-<header>
-    <div class="logo">
-        Checomponenti
+<header class="main-header">
+    <a href="${pageContext.request.contextPath}/catalogo" class="logo">
+        <span class="logo-accent">Chec</span>componenti
+    </a>
+    
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Cerca..." autocomplete="off">
+        <div id="search-results" class="search-results-dropdown"></div>
     </div>
-    <nav>
+    
+    <nav class="nav-links">
     
         <a href="${pageContext.request.contextPath}/catalogo">Catalogo</a>
-        <a href="${pageContext.request.contextPath}/carrello">Carrello</a>
+        <a href="${pageContext.request.contextPath}/carrello" class="cart-link">
+            Carrello
+        </a>
+		<span id="cart-count" class="cart-badge">Contatore carrello</span>
         
-        <% if (utente != null) { %>
-        	
-        	${utente.getUsername()}
-        
-			<a href="${pageContext.request.contextPath}/StoricoOrdini">Storico Ordini</a>
-			<a href="${pageContext.request.contextPath}/logout">Logout</a>
-			                	
+        <% if (utente == null) { %>
+        	<a href="${pageContext.request.contextPath}/login" class="btn-header btn-login">Accedi</a>
+            <a href="${pageContext.request.contextPath}/registrazione" class="btn-header btn-register">Registrati</a>
         <% } else { %>
-       		 <a href="${pageContext.request.contextPath}/login" class="btn-header btn-login"> Accedi </a>
-             
-             <a href="${pageContext.request.contextPath}/registrazione" class="btn-header btn-register"> Registrati </a>
-             
-        <%} %>
-        
-        <% if (utente!= null && utente.isAdmin() == true) {%>
+			<div class="user-dropdown">
+                <button type="button" class="user-dropdown-btn">
+        	${utente.getUsername()}
+        	</button>
+        	
+        	<div class="dropdown-content">
+				<a href="${pageContext.request.contextPath}/StoricoOrdini">Storico Ordini</a>
+							                	
+		<% if (utente.isAdmin()) { %>
+			<div class="dropdown-divider"></div>
+			<span class="dropdown-header">Area Amministratore</span>
 	        <a href="${pageContext.request.contextPath}/GestioneProdottiAdmin" class="btn-header btn-admin"> CRUD </a>
 	        <a href="${pageContext.request.contextPath}/GestioneOrdiniAdmin" class="btn-header btn-admin"> Gestione Ordini Admin </a>
 
-	<% } %>
-     
-        
+		<% } %>
+		<div class="dropdown-divider"></div>
+		<a href="${pageContext.request.contextPath}/logout" class="logout-link"> Logout</a>
+			
+    </div>
+     </div>
+        <% } %>
     </nav>
 </header>
