@@ -17,7 +17,7 @@ function verificaEmailAJAX() {
         .then(response => response.json())
         .then(data => {
             if (data.exists) {
-                emailError.innerText = "❌ Questa email è già usata da un altro utente.";
+                emailError.innerText = "Questa email è già usata da un altro utente.";
                 emailDisponibile = false;
             } else {
                 emailError.innerText = "";
@@ -55,7 +55,7 @@ function validaForm(event) {
         document.getElementById("emailError").innerText = "Inserisci un indirizzo e-mail valido.";
         valido = false;
     } else if (!emailDisponibile) {
-        document.getElementById("emailError").innerText = "❌ Email già occupata.";
+        document.getElementById("emailError").innerText = "Email già occupata.";
         valido = false;
     }
 

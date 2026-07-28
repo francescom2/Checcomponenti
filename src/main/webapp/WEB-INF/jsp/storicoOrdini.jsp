@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Storico Ordini - Checomponenti</title>
+    <title>Storico Ordini - Checcomponenti</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/fattura.css">
     <script src="${pageContext.request.contextPath}/js/fattura.js" defer></script>
@@ -26,7 +26,7 @@
             List<OrdineBean> ordini = (List<OrdineBean>) request.getAttribute("ordini");
             if (ordini == null || ordini.isEmpty()) {
         %>
-            <p class="no-ordini-msg">Non hai ancora effettuato ordini su Checomponenti.</p>
+            <p class="no-ordini-msg">Non hai ancora effettuato ordini su Checcomponenti.</p>
         <%
             } else {
                 for (OrdineBean ordine : ordini) {

@@ -3,7 +3,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Ordine Confermato - Checomponenti</title>
+    <title>Ordine Confermato - Checcomponenti</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
 	    <div class="confirmation-card">
 	    
 	        <h1 class="confirmation-title"> Ordine Confermato!</h1>
-	        <p>Grazie per il tuo acquisto su <strong>Checomponenti</strong>.</p>
+	        <p>Grazie per il tuo acquisto su <strong>Checcomponenti</strong>.</p>
 	        <p>Il tuo numero d'ordine è: <strong>#<%= request.getAttribute("idOrdine") %></strong></p>
 	
 	        <br>

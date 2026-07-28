@@ -1,27 +1,64 @@
 /*Unicamente per il layout di stampa della fattura*/
 @media print {
     /* Nasconde Header, Footer, Nav e Pulsanti */
-    header, footer, nav, .no-print, h2 {
+	.main-header, 
+	    footer:not(.totale-section), 
+	    nav, 
+	    .no-print, 
+    main > h2 {
         display: none !important;
     }
-
     /* Nasconde tutti gli ordini */
     .ordine-box {
         display: none !important;
     }
 
     /* 2. Mostra solo ordine selzionato */
-    .ordine-box.in-stampa {
+	.ordine-box.in-stampa {
         display: block !important;
-        border: 1px solid #000;
-        padding: 20px;
-        margin: 0;
-        background: #fff;
+        width: 100% !important;
+        max-width: 100% !important;
+        border: 1px solid #333 !important;
+        padding: 20px !important;
+        margin: 0 !important;
+        background: #fff !important;
+        box-shadow: none !important;
         page-break-after: avoid; /* Evita pagine bianche extra */
     }
-
-    body {
-        background: #fff;
-        color: #000;
+	body {
+        background: #fff !important;
+        color: #000 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }    
+    .ordine-box.in-stampa .table-responsive {
+        overflow: visible !important; /* Rimuove lo scrollbar dal foglio di carta */
+        width: 100% !important;
+        max-width: 100% !important;
+        border: none !important;
+        margin: 15px 0 !important;
+    }
+    
+    .ordine-box.in-stampa .table-ordini {
+        width: 100% !important;
+        min-width: 0 !important;      /* Rimuove la larghezza minima che creava lo scroll */
+        table-layout: auto !important;
+        border-collapse: collapse !important;
+    }
+    
+    .ordine-box.in-stampa .table-ordini th,
+    .ordine-box.in-stampa .table-ordini td {
+        font-size: 10pt !important;   /* Dimensione testo ideale per la stampa */
+        padding: 8px 6px !important;
+        border: 1px solid #ccc !important;
+        white-space: normal !important; /* Permette al testo di andare a capo pulito */
+    }
+    
+    .totale-section {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-end !important;
+        margin-top: 15px !important;
+        width: 100% !important;
     }
 }

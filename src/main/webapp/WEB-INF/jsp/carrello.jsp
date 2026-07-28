@@ -61,7 +61,7 @@
 	                                </td>
 	                                <td>€ <%= String.format("%.2f", item.getTotaleParziale()) %></td>
 	                                <td>
-	                                    <a href="${pageContext.request.contextPath}/carrello?action=remove&id=<%= item.getProdotto().getId() %>" class="btn-remove">❌ Rimuovi</a>
+	                                    <a href="${pageContext.request.contextPath}/carrello?action=remove&id=<%= item.getProdotto().getId() %>" class="btn-remove">Rimuovi</a>
 	                                </td>
 	                            </tr>
 	                        <% } %>

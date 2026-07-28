@@ -10,25 +10,52 @@
         
         switch (nome.trim()) {
             case "Processore": 
-                return "Intel oppure AMD?";
+                return "Intel oppure AMD?<br>Senza un buon processore la scheda video non può dare il massimo.";
             case "Scheda Video": 
                 return "Quanta potenza desideri?";
             case "Scheda Madre": 
-                return "Nuovo processore?";
+                return "Nuovo processore? o desideri un miglior IO?";
             case "RAM": 
-                return "Più RAM, più programmi aperti.";
+                return "Più RAM, più programmi aperti, meno ricaricamenti, più lavoro svolto.";
             case "Storage": 
                 return "Sei a corto di GB?";
             case "Dissipatore": 
-                return "Temperature troppo alte?";
+                return "Temperature troppo alte?<br>Senza un buon raffreddamento perfino un i9 può diventare un Celeron.";
             case "Case": 
-                return "Con RGB o senza?";
+                return "Puoi cambiare qualsiasi cosa dentro, ma se non cambi case vedrai sempre lo stesso PC.";
             case "Alimentatore": 
-                return "Aggiornata la scheda video?";
+                return "La nuova scheda video è troppo potente per il tuo alimentarore?";
             default: 
                 return "Scopri i migliori componenti selezionati per il tuo computer.";
         }
     }
+
+	private String getImmagineCategoria(String nome) {
+	    if (nome == null) return "img/imgNonTrovata.png";
+	    
+	    switch (nome.trim()) {
+	        case "Processore": 
+	            return "img/cpu.png";
+	        case "Scheda Video": 
+	            return "img/gpu.png";
+	        case "Scheda Madre": 
+	            return "img/schedaMadre.png";
+	        case "RAM": 
+	            return "img/ram.png";
+	        case "Storage": 
+	            return "img/ssd.png";
+	        case "Dissipatore": 
+	            return "img/Dissipatore.png";
+	        case "Case": 
+	            return "img/computer-case.png";
+	        case "Alimentatore": 
+	            return "img/alimentatore.png";
+	        default: 
+	            return "img/imgNonTrovata.png";
+	    }
+    }
+
+
 %>
 
 
@@ -76,6 +103,10 @@
                         <section class="category-row">
                             <!-- Info Categoria -->
                             <div class="category-info-box">
+                            	<img src="${pageContext.request.contextPath}/<%= getImmagineCategoria(cat.getNome()) %>" 
+                                     alt="<%= cat.getNome() %>" 
+                                     class="category-info-img"
+                                     onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/img/imgNonTrovata.png';">
                                 <h2><%= cat.getNome() %></h2>
                                 <p><%= getDescrizioneCategoria(cat.getNome()) %></p>
                             </div>
@@ -99,10 +130,10 @@
 						                                <a href="${pageContext.request.contextPath}/PaginaProdotto?id=<%= p.getId() %>">                                
 						                            
 					                               		<%-- Se non trova l'immagine associata --%>
-<img src="${pageContext.request.contextPath}/<%= (p.getImgPath() != null && !p.getImgPath().isEmpty()) ? p.getImgPath() : "img/imgNonTrovata.png" %>" 
-     alt="<%= p.getNome() %>" 
-     class="card-img"
-     onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/img/imgNonTrovata.png';">													
+														<img src="${pageContext.request.contextPath}/<%= (p.getImgPath() != null && !p.getImgPath().isEmpty()) ? p.getImgPath() : "img/imgNonTrovata.png" %>" 
+														     alt="<%= p.getNome() %>" 
+														     class="card-img"
+														     onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/img/imgNonTrovata.png';">													
 					                                	<h3><%= p.getNome() %> </h3>
 					                                	
 					                                </a>
