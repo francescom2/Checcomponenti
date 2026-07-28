@@ -99,7 +99,7 @@ public class GestioneProdottiAdmin extends HttpServlet {
             String descrizione = request.getParameter("descrizione");
             String existingImgPath = request.getParameter("existingImgPath");
 
-         // Gestione Upload immagine prodotto
+            // Gestione Upload immagine prodotto
             Part filePart = request.getPart("immagine");
             
             // Fallback: se non c'è una vecchia immagine, usa l'immagine di default del sistema
@@ -120,6 +120,7 @@ public class GestioneProdottiAdmin extends HttpServlet {
                 filePart.write(uploadPath + File.separator + uniqueFileName);
                 imgPath = "uploads/" + uniqueFileName;
             }
+
             ProdottoBean prodotto = new ProdottoBean();
             prodotto.setNome(nome);
             prodotto.setIdCategoria(idCategoria);
@@ -132,6 +133,14 @@ public class GestioneProdottiAdmin extends HttpServlet {
             if ("update".equalsIgnoreCase(action)) {
                 long id = Long.parseLong(request.getParameter("id"));
                 prodotto.setId(id);
+                
+                ProdottoBean vecchioProdotto = prodottoDAO.doRetrieveByKey(id);
+                if (vecchioProdotto != null) {
+                    prodotto.setVisibile(vecchioProdotto.getVisibile()); // Mantiene lo stato (true o false)
+                } else {
+                    prodotto.setVisibile(true);
+                }
+
                 prodottoDAO.doUpdate(prodotto);
             } else {
                 prodotto.setVisibile(true); // Nuovo prodotto visibile di default
