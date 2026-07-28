@@ -1,3 +1,5 @@
+<script src="${pageContext.request.contextPath}/js/ricerca.js" defer></script>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -18,11 +20,15 @@
         <span class="logo-accent">Chec</span>componenti
     </a>
     
-    <div class="search-container">
-        <input type="text" id="search-input" placeholder="Cerca..." autocomplete="off">
-        <div id="search-results" class="search-results-dropdown"></div>
-    </div>
-    
+	<form action="${pageContext.request.contextPath}/catalogo" method="GET" class="search-container">
+	    <input type="text" 
+	           name="q" 
+	           id="search-input" 
+	           placeholder="Cerca processori, GPU, RAM..." 
+	           autocomplete="off" 
+	           data-contextpath="${pageContext.request.contextPath}">
+	    <div id="search-results" class="search-results-dropdown"></div>
+	</form>    
     <nav class="nav-links">
     
         <a href="${pageContext.request.contextPath}/catalogo">Catalogo</a>

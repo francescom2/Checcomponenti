@@ -28,12 +28,23 @@ public class CatalogoController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
 
+        String query = request.getParameter("q");
+        
         ProdottoDAO dao = new ProdottoDAO();
         CategoriaDAO categoriaDAO = new CategoriaDAO();
         
+        List<ProdottoBean> prodotti;
+        
         try {
-            // 1. Prelevare la lista dei prodotti dal DB
-            Collection<ProdottoBean> prodotti = dao.doRetrieveAll(true);
+            // 1. Prelevare la lista dei prodotti dal DB         	
+        	if (query != null && !query.trim().isEmpty()) {
+                prodotti = dao.doRetrieveByNome(query.trim());
+                request.setAttribute("searchQuery", query.trim());
+                
+        	} else {
+        		prodotti = dao.doRetrieveAll(true);
+        	}
+        	
             List<CategoriaBean> categorie = categoriaDAO.doRetrieveAll();
             
             // 2. Spostare la lista dentro la request con il nome prodotti

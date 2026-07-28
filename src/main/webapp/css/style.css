@@ -703,3 +703,47 @@ footer {
     background-color: #2980b9;
     color: white !important;
 }
+
+.search-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s;
+}
+
+.search-item:hover {
+    background-color: #f8f9fa;
+}
+
+.search-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.search-item-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-item-title {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.search-item-price {
+    font-size: 12px;
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.search-item-empty {
+    padding: 12px 15px;
+    color: #777;
+    font-size: 13px;
+    text-align: center;
+}

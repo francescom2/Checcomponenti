@@ -69,8 +69,8 @@ public class ProdottoDAO {
         List<ProdottoBean> prodotti = new LinkedList<>();
         
         String selectSQL = onlyVisible 
-				    	    ? "SELECT * FROM " + TABLE_NAME + " WHERE visibile = 1"
-        					: "SELECT * FROM " + TABLE_NAME; 
+				    	    ? "SELECT * FROM " + TABLE_NAME + " WHERE visibile = 1 ORDER BY prezzo ASC"
+        					: "SELECT * FROM " + TABLE_NAME + " ORDER BY prezzo ASC"; 
         
         
         try (Connection con = ConnessioneDB.getConnection();
@@ -107,6 +107,26 @@ public class ProdottoDAO {
         return prodotti;
     }
     
+    // Cerca fino a 5 prodotti il cui nome contiene la stringa cercata
+    public synchronized List<ProdottoBean> doRetrieveByNome(String query) throws SQLException {
+        List<ProdottoBean> prodotti = new LinkedList<>();
+        
+        // LIMIT 5 per mostrare solo i primi risultati più rilevanti nella tendina
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE LOWER(nome) LIKE ? AND visibile = 1 ORDER BY prezzo ASC LIMIT 5";
+
+        try (Connection con = ConnessioneDB.getConnection();
+             PreparedStatement ps = con.prepareStatement(selectSQL)) {
+
+            ps.setString(1, "%" + query.toLowerCase() + "%");
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    prodotti.add(mapResultSetToBean(rs));
+                }
+            }
+        }
+        return prodotti;
+    }
 
     // SPECIFICI PER L'ADMIN
 
