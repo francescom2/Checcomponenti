@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #fff;
@@ -523,20 +526,6 @@ footer {
     right: 5px;
 }
 
-/* Responsive per schermi Smartphone */
-@media (max-width: 900px) {
-    .category-row {
-        flex-direction: column;
-    }
-    
-    .category-info-box {
-        flex: none;
-        width: 100%;
-        box-sizing: border-box;
-    }
-}
-
-
 .main-header {
     display: flex;
     justify-content: space-between;
@@ -746,4 +735,37 @@ footer {
     color: #777;
     font-size: 13px;
     text-align: center;
+}
+
+
+
+/* Responsive per schermi Smartphone */
+@media (max-width: 900px) {
+	
+    .category-row {
+        flex-direction: column;
+    }
+    
+    .category-info-box {
+        flex: none;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .main-header{
+	   flex-direction: column;
+	   gap: 8px;
+	   padding: 10px;
+    }
+    .search-container{
+    	width: 100%;
+    	margin: 0;
+    	flex: none;
+    }
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+    }
 }

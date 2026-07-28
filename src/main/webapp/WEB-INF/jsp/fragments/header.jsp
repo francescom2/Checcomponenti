@@ -34,8 +34,8 @@
         <a href="${pageContext.request.contextPath}/catalogo">Catalogo</a>
         <a href="${pageContext.request.contextPath}/carrello" class="cart-link">
             Carrello
+			<span id="cart-count" class="cart-badge">Contatore carrello</span>
         </a>
-		<span id="cart-count" class="cart-badge">Contatore carrello</span>
         
         <% if (utente == null) { %>
         	<a href="${pageContext.request.contextPath}/login" class="btn-header btn-login">Accedi</a>
