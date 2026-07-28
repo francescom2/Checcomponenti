@@ -40,7 +40,12 @@
         <a href="${pageContext.request.contextPath}/catalogo">Catalogo</a>
         <a href="${pageContext.request.contextPath}/carrello" class="cart-link">
             Carrello
-			<span id="cart-count" class="cart-badge"><%= totaleArticoli %></span>
+		<span id="cart-count" 
+          class="cart-badge" 
+          style="<%= (totaleArticoli == 0) ? "display: none;" : "" %>">
+          <%= totaleArticoli %>
+    	</span>           
+
         </a>
         
         <% if (utente == null) { %>
@@ -58,8 +63,8 @@
 		<% if (utente.isAdmin()) { %>
 			<div class="dropdown-divider"></div>
 			<span class="dropdown-header">Area Amministratore</span>
-	        <a href="${pageContext.request.contextPath}/GestioneProdottiAdmin" class="btn-header btn-admin"> CRUD </a>
-	        <a href="${pageContext.request.contextPath}/GestioneOrdiniAdmin" class="btn-header btn-admin"> Gestione Ordini Admin </a>
+	        <a href="${pageContext.request.contextPath}/GestioneProdottiAdmin" class="btn-header btn-admin"> Gestione Prodotti </a>
+	        <a href="${pageContext.request.contextPath}/GestioneOrdiniAdmin" class="btn-header btn-admin"> Gestione Ordini </a>
 
 		<% } %>
 		<div class="dropdown-divider"></div>

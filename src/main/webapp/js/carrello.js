@@ -28,7 +28,14 @@ function aggiungiAlCarrello(buttonElement, idProdotto, contextPath) {
 			
             buttonElement.innerHTML = '✓ Aggiunto!';
             buttonElement.classList.add('btn-added');
-
+			
+			// Contatore dei prodotti nel carrello
+			if (data.totalCount > 0) {
+			        cartBadge.style.display = 'inline-block'; 
+			    } else {
+			        cartBadge.style.display = 'none';         
+			    }
+			
             setTimeout(() => {
                 buttonElement.innerHTML = originalText;
                 buttonElement.classList.remove('btn-added');

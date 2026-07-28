@@ -16,7 +16,7 @@
     <%@ include file="../fragments/header.jsp" %>
 
     <main class="crud-container">
-        <h2> Pannello Admin - Gestione Ordini Clienti</h2>
+        <h2> Pannello Amministratore - Gestione Ordini Clienti</h2>
 
         <!-- Form dei Filtri -->
         <section class="form-section">
