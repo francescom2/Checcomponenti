@@ -99,11 +99,10 @@
 						                                <a href="${pageContext.request.contextPath}/PaginaProdotto?id=<%= p.getId() %>">                                
 						                            
 					                               		<%-- Se non trova l'immagine associata --%>
-						                                <img src="${pageContext.request.contextPath}/<%= (p.getImgPath() != null && !p.getImgPath().isEmpty()) ? p.getImgPath() : "img/imgNonTrovata.png" %>" 
-														     alt="<%= p.getNome() %>" 
-														     class="card-img"
-														     onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/img/imgNonTrovata.png';">
-													
+<img src="${pageContext.request.contextPath}/<%= (p.getImgPath() != null && !p.getImgPath().isEmpty()) ? p.getImgPath() : "img/imgNonTrovata.png" %>" 
+     alt="<%= p.getNome() %>" 
+     class="card-img"
+     onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/img/imgNonTrovata.png';">													
 					                                	<h3><%= p.getNome() %> </h3>
 					                                	
 					                                </a>

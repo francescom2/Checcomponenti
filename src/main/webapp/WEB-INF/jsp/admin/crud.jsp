@@ -11,7 +11,7 @@
     <title>Gestione Catalogo - Admin Checomponenti</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/crud.css">
-	<script src="${pageContext.request.contextPath}/js/crud.js" defer></script>
+    <script src="${pageContext.request.contextPath}/js/crud.js" defer></script>
 </head>
 <body>
 
@@ -31,6 +31,8 @@
             <div class="alert alert-success">Prodotto reso nuovamente visibile nel catalogo</div>
         <% } else if ("deleted".equals(msg)) { %>
             <div class="alert alert-success">Prodotto eliminato definitivamente dal Database</div>
+        <% } else if ("success".equals(msg)) { %>
+            <div class="alert alert-success">Operazione completata con successo!</div>
         <% } else if ("fk_constraint".equals(error)) { %>
             <div class="alert alert-danger">
                  <strong>Impossibile eliminare:</strong> questo prodotto è presente in ordini passati. Usa il pulsante <strong>"Nascondi"</strong> per rimuoverlo dal catalogo.
@@ -41,10 +43,14 @@
         <section class="form-section">
             <h3 id="form-title">Aggiungi Nuovo Prodotto</h3>
             
-            <form action="${pageContext.request.contextPath}/GestioneProdottiAdmin" method="POST" id="crud-form" class="crud-form">
+            <form action="${pageContext.request.contextPath}/GestioneProdottiAdmin" method="POST" enctype="multipart/form-data" id="crud-form" class="crud-form">
                 <!-- Action hidden: 'add' o 'update' -->
+                
                 <input type="hidden" name="action" id="form-action" value="add">
                 <input type="hidden" name="id" id="prodotto-id" value="">
+                
+                <!-- Campo nascosto per conservare l'immagine attuale in modifica -->
+                <input type="hidden" name="existingImgPath" id="existingImgPath" value="">
 
                 <div class="form-grid">
                     <div class="form-group">
@@ -90,8 +96,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="imgPath">Nome File Immagine *</label>
-                        <input type="text" id="imgPath" name="imgPath" placeholder="es. cpu-i7.jpg" value="default.jpg" required>
+                        <label for="immagine">Immagine Prodotto</label>
+                        <input type="file" id="immagine" name="immagine" accept="image/png, image/jpeg, image/webp">
                     </div>
                 </div>
 
@@ -102,7 +108,7 @@
 
                 <div class="form-actions">
                     <button type="submit" id="btn-submit" class="btn-save">Salva Prodotto</button>
-                    <button type="button" id="btn-reset" class="btn-cancel" onclick="resetForm()">Annulla Modifica</button>
+                    <button type="button" id="btn-reset" class="btn-cancel" onclick="resetForm()" style="display: none;">Annulla Modifica</button>
                 </div>
             </form>
         </section>
@@ -132,7 +138,7 @@
                             if (prodotti == null || prodotti.isEmpty()) {
                         %>
                             <tr>
-                                <td colspan="8" class="empty-table">Nessun prodotto trovato nel catalogo.</td>
+                                <td colspan="9" class="empty-table">Nessun prodotto trovato nel catalogo.</td>
                             </tr>
                         <%
                             } else {
@@ -142,7 +148,10 @@
                             <tr class="<%= isVisibile ? "" : "row-hidden" %>">
                                 <td>#<%= p.getId() %></td>
                                 <td>
-                                    <img src="img/<%= p.getImgPath() %>" alt="<%= p.getNome() %>" class="table-img">
+                                    <img src="${pageContext.request.contextPath}/<%= p.getImgPath() %>" 
+                                         alt="<%= p.getNome() %>" 
+                                         class="table-img"
+                                         onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/img/imgNonTrovata.png';">
                                 </td>
                                 <td><strong><%= p.getNome() %></strong></td>
 								<td>
@@ -170,8 +179,13 @@
                                     <% } %>
                                 </td>
                                 <td class="actions-cell">
+                                    <%
+                                        // Sanificazione stringhe per evitare errori di sintassi in JavaScript
+                                        String nomeSafe = p.getNome() != null ? p.getNome().replace("'", "\\'").replace("\"", "\\\"") : "";
+                                        String descSafe = p.getDescrizione() != null ? p.getDescrizione().replace("\r", "").replace("\n", " ").replace("'", "\\'").replace("\"", "\\\"") : "";
+                                    %>
                                     <!-- Tasto modifica -->
-                                    <button class="btn-action edit" onclick='caricaInForm(<%= p.getId() %>, "<%= p.getNome().replace("\"", "\\\"") %>", <%= p.getIdCategoria() %>, <%= p.getPrezzo() %>, "<%= p.getIva() %>", <%= p.getQuantita() %>, "<%= p.getImgPath() %>", "<%= p.getDescrizione().replace("\n", " ").replace("\"", "\\\"") %>")'>
+                                    <button class="btn-action edit" onclick='caricaInForm(<%= p.getId() %>, "<%= nomeSafe %>", <%= p.getIdCategoria() %>, <%= p.getPrezzo() %>, "<%= p.getIva() %>", <%= p.getQuantita() %>, "<%= p.getImgPath() %>", "<%= descSafe %>")'>
                                         Modifica
                                     </button>
 
