@@ -176,43 +176,51 @@ public class OrdineDAO {
                 .append("FROM Ordine o ")
                 .append("LEFT JOIN InfoConsegna i ON o.infoConsegna = i.id ")
                 .append("WHERE 1=1 ");
-        
+        List<Object> parameters = new ArrayList<>();
         
         if (dataInizio != null && !dataInizio.isEmpty()) {
-            sql.append(" AND DATE(o.dataOrdine) >= '").append(dataInizio).append("'");
+            sql.append(" AND DATE(o.dataOrdine) >= ?");
+            parameters.add(java.sql.Date.valueOf(dataInizio));
         }
         if (dataFine != null && !dataFine.isEmpty()) {
-            sql.append(" AND DATE(o.dataOrdine) <= '").append(dataFine).append("'");
+            sql.append(" AND DATE(o.dataOrdine) <= ?");
+            parameters.add(java.sql.Date.valueOf(dataFine));
         }
         if (idUtenteStr != null && !idUtenteStr.isEmpty()) {
-            sql.append(" AND o.idUtente = ").append(Long.parseLong(idUtenteStr));
+            sql.append(" AND o.idUtente = ?");
+            parameters.add(Long.parseLong(idUtenteStr));
         }
 
         sql.append(" ORDER BY dataOrdine DESC");
 
         try (Connection con = ConnessioneDB.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql.toString());
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                OrdineBean ordine = new OrdineBean();
-                ordine.setId(rs.getLong("id"));
-                ordine.setIdUtente(rs.getLong("idUtente"));
-                ordine.setInfoConsegna(rs.getLong("infoConsegna"));
-                ordine.setDataOrdine(rs.getTimestamp("dataOrdine"));
-                ordine.setItems(doRetrieveItemsByOrdine(ordine.getId(), con));
-                
-                if (rs.getString("destinatario") != null) {
-                    String indirizzo = rs.getString("destinatario") + " - " + 
-                                       rs.getString("via") + ", " + 
-                                       rs.getString("citta") + " (" + rs.getInt("cap") + ")";
-                    ordine.setIndirizzoConsegnaFormatted(indirizzo);
-                }
-
-                ordini.add(ordine);
+                PreparedStatement ps = con.prepareStatement(sql.toString())) {
+        	
+            for (int i = 0; i < parameters.size(); i++) {
+                ps.setObject(i + 1, parameters.get(i));
+            }
+            
+            try(ResultSet rs = ps.executeQuery()){
+	            while (rs.next()) {
+	                OrdineBean ordine = new OrdineBean();
+	                ordine.setId(rs.getLong("id"));
+	                ordine.setIdUtente(rs.getLong("idUtente"));
+	                ordine.setInfoConsegna(rs.getLong("infoConsegna"));
+	                ordine.setDataOrdine(rs.getTimestamp("dataOrdine"));
+	                ordine.setItems(doRetrieveItemsByOrdine(ordine.getId(), con));
+	                
+	                if (rs.getString("destinatario") != null) {
+	                    String indirizzo = rs.getString("destinatario") + " - " + 
+	                                       rs.getString("via") + ", " + 
+	                                       rs.getString("citta") + " (" + rs.getInt("cap") + ")";
+	                    ordine.setIndirizzoConsegnaFormatted(indirizzo);
+	                }
+	
+	                ordini.add(ordine);
             }
         }
         return ordini;
+        }
     }    private List<OrderItemBean> doRetrieveItemsByOrdine(long idOrdine, Connection connection) throws SQLException {
         List<OrderItemBean> items = new ArrayList<>();
         String selectItems = "SELECT * FROM OrderItem WHERE idOrdine = ?";
