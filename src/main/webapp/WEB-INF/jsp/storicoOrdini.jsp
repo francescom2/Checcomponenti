@@ -34,35 +34,36 @@
             <section class="ordine-box">
                 <header class="ordine-header">
                     <h3>Ordine #<%= ordine.getId() %></h3>
-                    <p><strong>Data:</strong> <%= ordine.getDataOrdine() %></p>
-                    <p><strong>Destinazione:</strong> <%= ordine.getIndirizzoConsegnaFormatted() %></p>
+                    <p class="order-info"><strong>Data:</strong> <%= ordine.getDataOrdine() %></p>
+                    <p class="order-info"><strong>Destinazione:</strong> <%= ordine.getIndirizzoConsegnaFormatted() %></p>
                 </header>
-
-                <table class="table-ordini">
-                    <thead>
-                        <tr>
-                            <th>Prodotto</th>
-                            <th>Prezzo Imponibile</th>
-							<th>IVA</th>
-                   			<th>Prezzo Unitario</th>
-                            <th>Quantità</th>
-                            <th>Subtotale (Inc. IVA)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for (OrderItemBean item : ordine.getItems()) { %>
-                            <tr>
-                                <td><%= item.getNome() %></td>
-                                <td>€ <%= String.format("%.2f", item.getPrezzoSenzaIva()) %></td>
-                                <td><%= item.getIva() %>%</td>
-                                <td>€ <%= String.format("%.2f", item.getPrezzo()) %></td>
-                                <td><%= item.getQuantita() %></td>
-                                <td>€ <%= String.format("%.2f", item.getPrezzo() * item.getQuantita() ) %></td>
-                            </tr>
-                        <% } %>
-                    </tbody>
-                </table>
-
+				<div class="table-responsive">
+	                <table class="table-ordini">
+	                    <thead>
+	                        <tr>
+	                            <th>Prodotto</th>
+	                            <th>Prezzo Imponibile</th>
+								<th>IVA</th>
+	                   			<th>Prezzo Unitario</th>
+	                            <th>Quantità</th>
+	                            <th>Subtotale (Inc. IVA)</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody>
+	                        <% for (OrderItemBean item : ordine.getItems()) { %>
+	                            <tr>
+	                                <td><%= item.getNome() %></td>
+	                                <td>€ <%= String.format("%.2f", item.getPrezzoSenzaIva()) %></td>
+	                                <td><%= item.getIva() %>%</td>
+	                                <td>€ <%= String.format("%.2f", item.getPrezzo()) %></td>
+	                                <td><%= item.getQuantita() %></td>
+	                                <td>€ <%= String.format("%.2f", item.getPrezzo() * item.getQuantita() ) %></td>
+	                            </tr>
+	                        <% } %>
+	                    </tbody>
+	                </table>
+				</div>
+	
                 <footer class="totale-section">
                     <p class="totale-testo">Totale Ordine: <strong>€ <%= String.format("%.2f", ordine.getTotaleOrdine()) %></strong></p>
 					<button type="button" class="btn-stampa no-print" onclick="stampaFatturaSingola(this)">

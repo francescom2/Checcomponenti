@@ -22,7 +22,7 @@
 		<% Carrello cart = (Carrello) session.getAttribute("carrello"); %>
         <div class="checkout-layout">
             <!-- Form Dati Spedizione -->
-            <div class="auth-container checkout-form-container">
+            <div class="cart-summary-box checkout-form-container">
                 <h3>Indirizzo di Spedizione</h3>
                 <form action="${pageContext.request.contextPath}/checkout" method="POST">
                     

@@ -10,15 +10,17 @@
 
     <%@ include file="fragments/header.jsp" %>
 
-    <div class="main-content confirmation-container">
-        <h1 class="confirmation-title"> Ordine Confermato!</h1>
-        <p>Grazie per il tuo acquisto su <strong>Checomponenti</strong>.</p>
-        <p>Il tuo numero d'ordine è: <strong>#<%= request.getAttribute("idOrdine") %></strong></p>
-
-        <br>
-        <a href="${pageContext.request.contextPath}/catalogo" class="btn">Torna al Catalogo</a>
-    </div>
-
+    <div class="main-content">
+	    <div class="confirmation-card">
+	    
+	        <h1 class="confirmation-title"> Ordine Confermato!</h1>
+	        <p>Grazie per il tuo acquisto su <strong>Checomponenti</strong>.</p>
+	        <p>Il tuo numero d'ordine è: <strong>#<%= request.getAttribute("idOrdine") %></strong></p>
+	
+	        <br>
+	        <a href="${pageContext.request.contextPath}/catalogo" class="btn">Torna al Catalogo</a>
+	    </div>
+	</div>
     <%@ include file="fragments/footer.jsp" %>
 
 </body>

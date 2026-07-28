@@ -30,43 +30,44 @@
             </div>
         <% } else { %>
             <div class="cart-container">
-                <table class="cart-table">
-                    <thead>
-                        <tr>
-                            <th>Prodotto</th>
-                            <th>Prezzo Imponibile</th>
-                            <th>IVA</th>
-                            <th>Prezzo Unitario</th>
-                            <th>Quantità</th>
-                            <th>Totale</th>
-                            <th>Azione</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for (ItemCarrello item : carrello.getItems()) { %>
-                            <tr>
-                                <td>
-                                    <strong><%= item.getProdotto().getNome() %></strong>
-                                </td>
-                                <td>€ <%= String.format("%.2f", item.getProdotto().getPrezzoSenzaIva()) %></td>
-                                <td> <%= item.getProdotto().getIva() %> % </td>
-                                <td>€ <%= String.format("%.2f", item.getProdotto().getPrezzo()) %></td>                                
-                                <td>
-                                    <form action="${pageContext.request.contextPath}/carrello" method="POST" class="qty-form">
-                                        <input type="hidden" name="action" value="update">
-                                        <input type="hidden" name="id" value="<%= item.getProdotto().getId() %>">
-                                        <input type="number" name="quantita" value="<%= item.getQuantita() %>" min="1" max="<%= item.getProdotto().getQuantita() %>" onchange="this.form.submit()" class="qty-input">
-                                    </form>
-                                </td>
-                                <td>€ <%= String.format("%.2f", item.getTotaleParziale()) %></td>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/carrello?action=remove&id=<%= item.getProdotto().getId() %>" class="btn-remove">❌ Rimuovi</a>
-                                </td>
-                            </tr>
-                        <% } %>
-                    </tbody>
-                </table>
-
+            	<div class="table-responsive">
+	                <table class="cart-table">
+	                    <thead>
+	                        <tr>
+	                            <th>Prodotto</th>
+	                            <th>Prezzo Imponibile</th>
+	                            <th>IVA</th>
+	                            <th>Prezzo Unitario</th>
+	                            <th>Quantità</th>
+	                            <th>Totale</th>
+	                            <th>Azione</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody>
+	                        <% for (ItemCarrello item : carrello.getItems()) { %>
+	                            <tr>
+	                                <td>
+	                                    <strong><%= item.getProdotto().getNome() %></strong>
+	                                </td>
+	                                <td>€ <%= String.format("%.2f", item.getProdotto().getPrezzoSenzaIva()) %></td>
+	                                <td> <%= item.getProdotto().getIva() %> % </td>
+	                                <td>€ <%= String.format("%.2f", item.getProdotto().getPrezzo()) %></td>                                
+	                                <td>
+	                                    <form action="${pageContext.request.contextPath}/carrello" method="POST" class="qty-form">
+	                                        <input type="hidden" name="action" value="update">
+	                                        <input type="hidden" name="id" value="<%= item.getProdotto().getId() %>">
+	                                        <input type="number" name="quantita" value="<%= item.getQuantita() %>" min="1" max="<%= item.getProdotto().getQuantita() %>" onchange="this.form.submit()" class="qty-input">
+	                                    </form>
+	                                </td>
+	                                <td>€ <%= String.format("%.2f", item.getTotaleParziale()) %></td>
+	                                <td>
+	                                    <a href="${pageContext.request.contextPath}/carrello?action=remove&id=<%= item.getProdotto().getId() %>" class="btn-remove">❌ Rimuovi</a>
+	                                </td>
+	                            </tr>
+	                        <% } %>
+	                    </tbody>
+	                </table>
+				</div>
                 <div class="cart-summary">
                     <h3>Totale Carrello: <span class="total-price">€ <%= String.format("%.2f", carrello.getTotale()) %></span></h3>
                     <div class="cart-actions">
