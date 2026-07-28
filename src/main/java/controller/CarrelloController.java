@@ -59,8 +59,14 @@ public class CarrelloController extends HttpServlet {
             if ("true".equals(isAjax)) {
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
+                
+                int totalCount = carrello.getTotaleArticoli(); 
+
                 // Restituiamo una risposta JSON confermando l'operazione
-                response.getWriter().write("{\"status\":\"success\"}");
+                String jsonResponse = "{\"status\":\"success\", \"totalCount\":" + totalCount + "}";
+                response.getWriter().write(jsonResponse);
+                response.getWriter().flush();
+                
                 return;
             }
 

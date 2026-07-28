@@ -18,7 +18,14 @@ function aggiungiAlCarrello(buttonElement, idProdotto, contextPath) {
         return response.json();
     })
     .then(data => {
+		console.log("Risposta dal server:", data);
+		
         if (data.status === 'success') {
+			const cartBadge = document.getElementById('cart-count');
+			if (cartBadge && data.totalCount !== undefined) {
+				cartBadge.textContent = data.totalCount;
+			}
+			
             buttonElement.innerHTML = '✓ Aggiunto!';
             buttonElement.classList.add('btn-added');
 

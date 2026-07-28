@@ -1,4 +1,12 @@
 <script src="${pageContext.request.contextPath}/js/ricerca.js" defer></script>
+<%@ page import ="model.UtenteBean" %>
+<%@ page import="model.Carrello" %>
+<% 
+	UtenteBean utente = (UtenteBean) session.getAttribute("utente"); 
+	Carrello carrelloHeader = (Carrello) session.getAttribute("carrello");
+	int totaleArticoli = (carrelloHeader != null) ? carrelloHeader.getTotaleArticoli() : 0;
+%>
+
 
 <!DOCTYPE html>
 <html lang="it">
@@ -12,8 +20,6 @@
 </head>
 <body>
 
-<%@ page import ="model.UtenteBean" %>
-<% UtenteBean utente = (UtenteBean) session.getAttribute("utente"); %>
 
 <header class="main-header">
     <a href="${pageContext.request.contextPath}/catalogo" class="logo">
@@ -34,7 +40,7 @@
         <a href="${pageContext.request.contextPath}/catalogo">Catalogo</a>
         <a href="${pageContext.request.contextPath}/carrello" class="cart-link">
             Carrello
-			<span id="cart-count" class="cart-badge">Contatore carrello</span>
+			<span id="cart-count" class="cart-badge"><%= totaleArticoli %></span>
         </a>
         
         <% if (utente == null) { %>

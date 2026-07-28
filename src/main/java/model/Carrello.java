@@ -85,4 +85,13 @@ public class Carrello implements Serializable {
     public void svuota() {
         items.clear();
     }
+    
+    // Calcola il numero totale di pezzi presenti nel carrello
+    public int getTotaleArticoli() {
+        int totale = 0;
+        for (ItemCarrello item : items) {
+            totale += item.getQuantita();
+        }
+        return totale;
+    }
 }
